@@ -1,0 +1,59 @@
+﻿body {
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background-color: #4E5869;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+ul, ol, dl {
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6,{
+	margin-top: 0;
+	padding-right: 15px;
+	padding-left: 15px; 
+}
+p{
+	margin:0;
+	padding :0;
+	font-size: 9px;
+	text-align: center;
+}
+.container {
+	width: 80%;
+	max-width: 1260px;
+	min-width: 780px;
+	background-color: #FFF;
+	margin: 0 auto;
+}
+
+.content {
+	padding: 10px 0;
+    position: center;
+}
+
+#START{
+        position:center;
+    }
+#startlocation {
+    display:block;
+	text-align:center;
+    margin:auto;
+    }
+#Endlocation{
+    display:block;
+    text-align:center;
+    margin:auto;
+}
+#Form_Container{
+    display:block;
+    width:10%;
+    margin:auto;
+}
+#KingPhoto{
+    display:block;
+    text-align:center; 
+    margin:auto;
+}
