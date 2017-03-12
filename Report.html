@@ -6,29 +6,32 @@
 
     <link rel="stylesheet"
           type="text/css"
-          href="Css/init_page.css" />
-
-    <script src="Javascript/ini_Free.js"> </script>
+          href="Css/Text_page.css" />
+    <script src="Javascript/email.js"></script>
 </head>
 
 <body>
 
     <div class="container">
         <div class="content">
-            <div class="UserName">
             <form action="mailto:12wkpf@kings-school.co.uk" method="post" enctype="text/plain">
-                UserName: <br />
-                <input type="text" name="name" /><br />
-                Title: <br />
-                <input type="text" name="title" /><br />
-                Content: <br />
-                <input type="text" name="Content" /><br /><br />
-                <input type="submit" value="Send" />
+                <div class="User" id="User">
+                    UserName:<input type="text" name="name" id="Name" />
+                </div>
+                <div class="Title" id="Title">
+                    Title:<input type="text" name="title" />
+                </div>
+                <div class="content" id="Content">
+                    Content:
+                    <input type="text" name="Content" id="Box"/>
+                </div>
+                <br /><br />
+                <input type="button" onclick="init()" value="Open Email to Send" /></a>
                 <input type="reset" value="Reset">
-            </form></div>
+            </form>
+        </div>
             
         </div>
-    </div>
 
 </body>
 </html> 
