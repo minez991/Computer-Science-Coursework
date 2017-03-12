@@ -1,0 +1,34 @@
+﻿body {
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background-color: #4E5869;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+.container {
+	width: 80%;
+	max-width: 1260px;
+	min-width: 780px;
+	background-color: #FFF;
+	margin: 0 auto;
+}
+
+#User{
+    display:block;
+    text-align:center;
+    margin:auto;
+}
+#Title{
+    display:block;
+    text-align:center;
+    margin:auto;
+}
+#Content{
+    display:block;
+    text-align:center;
+    margin:auto;
+}
+#Box{
+    width:80%;
+    height:80%;
+}
