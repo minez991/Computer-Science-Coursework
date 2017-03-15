@@ -33,14 +33,14 @@ p{
 .content {
 	padding: 10px 0;
     position: center;
-    margin:auto;
-    width:unset;
+    margin:auto
+    width:516px
 }
 
 #START{
         position:center;
     }
-#START {
+#startlocation {
     display:block;
 	text-align:center;
     margin:auto;
@@ -66,26 +66,7 @@ p{
     color: white;
     padding: 15px 32px;
     text-decoration: none;
-    display: block;
+    display: inline-block;
     font-size: 16px;
     margin: auto;
-
-}
-
-label.custom-select {
-    display: block;
-    margin:auto;
-    text-align:center;
-
-}
-
-.custom-select select {
-    padding: 4px 3px 3px 5px;
-    margin: 0;
-    font: inherit;
-    text-align:center;
-    outline:none; /* remove focus ring from Webkit */
-    background: #4CAF50;
-    color:white;
-    border:0;
 }
