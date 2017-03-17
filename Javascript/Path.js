@@ -24,7 +24,7 @@ var Database = {
     AR_End: new node("ARE", ["ARS", "SH", "CY"], [210, 466]),
     MTL: new node("MTL", ["CO", "MTR", "BI"], [304, 78]),
     MTR: new node("MTR", ["MTL", "MBR"], [403, 75]),
-    MBL: new node("MBL", ["BI", "CH", "MBR"], [293, 134]),
+    MBL: new node("MBL", ["BI", "CH", "MBR"], [303, 186]),
     MBR: new node("MBR", ["CH", "MTR", "MBL", "MP"], [385, 192]),
     MP: new node("MP", ['MBR', 'ME', "MAM"], [391, 232]),
     MAM: new node("MAM", ["MP", "GTL", "OG"], [421, 275]),
@@ -111,6 +111,52 @@ function bubbleSort(NodeList) {
 }
 }
 }
+// I could convert this to a merge sort
+
+function mergesort(NodeList) {
+    if (NodeList.length <= 1) {
+        console.log("This Node List has only 1 element")
+        return NodeList
+    }
+    else {
+        l1 = []
+        l2 = []
+        for (i = 0; i < parseInt(NodeList.length / 2); i++)
+            l1.push(NodeList[i])
+        for (i = parseInt(NodeList.length / 2) ; i < NodeList.length; i++)
+            l2.push(NodeList[i])
+        //l1 = NodeList.slice(0, parseInt(NodeList.length / 2)-1)
+        //l2 = NodeList.slice(parseInt(NodeList.length / 2), NodeList.length-1)
+        console.log("Split complete")
+        console.log("Start List")
+        console.log(NodeList)
+        console.log("Split List")
+        console.log(l1)
+        console.log(l2)
+        l1 = mergesort(l1)
+        l2 = mergesort(l2)
+        return merge(l1,l2)
+    }
+}
+function merge(array1,array2) {
+    var finalarray = [];
+    console.log(array2)
+    while (array1.length != 0 && array2.length != 0) {
+        if (array1[0].temp >= array2[0].temp) {
+            finalarray.push(array1.pop())
+        }
+        else{
+            finalarray.push(array2.pop())
+        }
+    }
+    while (array1.length != 0) {
+        finalarray.push(array1.pop())
+    }
+    while (array2.length != 0) {
+        finalarray.push(array2.pop())
+    }
+    return finalarray
+}
 function retraceLastNode(node, Start) {
     console.log('Current Node:' + node.name)
     console.log('This is the ' + n + ' Recursion')
@@ -126,7 +172,7 @@ function retraceLastNode(node, Start) {
                 ConnectedNode.retraceLastNode = true
                 if (ConnectedNode != Start) {
                     console.log("d3")
-                    retraceLastNode(ConnectedNode,Start)
+                    retraceLastNode(ConnectedNode,Start) // recursive
                 } else if (ConnectedNode == Start) {
 //                    console.log("d3 = ")
 //                    console.log(ConnectedNode)
@@ -156,29 +202,30 @@ function Pathfind(Start, End) {
         Assigntemp(Start, TempNodes[i])        // Assigning temperary value to all connected Node
     }
     console.log(TempNodes)
-    console.log("---5: Bubble Sort TempNodes---")
-    bubbleSort(TempNodes)       //           // Find the node with smallest Node using bubble sort
-    console.log(TempNodes)
-    console.log(End)
+    console.log("---5: Sorting TempNodes---")
+    //bubbleSort(TempNodes)       //           // Find the node with smallest Node using bubble sort
+    console.log(mergesort(TempNodes))
+    //console.log(End)
     while (End.ord == null) {                  // looping this algorithm until the Destination has an perment value
         console.log("---6: Current node -> smallest temp---")
         var Current = TempNodes.pop()         // Go to the next node
         visited.push(Current)                 // Push it to visited node
-        console.log(TempNodes)
-        console.log("Current Node:" + Current.name)
+        //console.log(TempNodes)
+        //console.log("Current Node:" + Current.name)
         console.log("---7: Assign Permentant value for the current node---")
         AssignPerm(Current)                  // Assigning permanent value to the node
-        console.log("Next Order: " + Ord)
-        console.log("Current Order" + Current.ord)
+       // console.log("Next Order: " + Ord)
+      //  console.log("Current Order" + Current.ord)
         console.log("---8: Push the new connected to the Templist---")
-        console.log(Current)
+      //  console.log(Current)
         PushConToTemp(Current)                  
-        console.log(TempNodes)
+      //  console.log(TempNodes)
         console.log("---9: Assign Temp Values to the new Node---")
         AssignConnectedtemp(Current)
         console.log("---10: Bubble Sort TempNodes---")
-        bubbleSort(TempNodes)
-        console.log("Current Node:" + Current.name)
+        //bubbleSort(TempNodes)
+        TempNodes = mergesort(TempNodes)
+      //console.log(TempNodes)
     }
     //FUNCTION WORKED! RETRACT FROM HERE
     // Debug infomation
@@ -264,11 +311,6 @@ function Node(input) {
         return Database.PLE
     }
 }
-
-
-
-
-
 
 //__INIT__
 (function int() {
