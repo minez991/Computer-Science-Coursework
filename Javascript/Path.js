@@ -11,8 +11,12 @@ function node(name,connect,start,type) {
     this.retracevisited = false
     this.p1 = start
     this.type = type
-    this.m = function () {
-        console.log("hi")
+    this.gettype = function () {
+        if (type == "Way Points") {
+            return true
+        } else {
+            return false
+        }
     }
 }
 var user ={ 
@@ -20,19 +24,19 @@ var user ={
     End: sessionStorage.getItem("End_Op"),
 }       //Class of user's selection
 var Database = {
-    AR_start: new node("ARS", ["GTL", "GBL", "ARE"], [503, 470]),
-    AR_End: new node("ARE", ["ARS", "SH", "CY"], [210, 466]),
-    MTL: new node("MTL", ["CO", "MTR", "BI"], [304, 78]),
-    MTR: new node("MTR", ["MTL", "MBR"], [403, 75]),
-    MBL: new node("MBL", ["BI", "CH", "MBR"], [293, 134]),
-    MBR: new node("MBR", ["CH", "MTR", "MBL", "MP"], [385, 192]),
-    MP: new node("MP", ['MBR', 'ME', "MAM"], [391, 232]),
-    MAM: new node("MAM", ["MP", "GTL", "OG"], [421, 275]),
-    MAG: new node("MAG", ["OG", "MU"], [256, 298]),
-    GTL: new node("GTL", ["UC", "ME", "MAM", "ARS"], [516, 307]),
-    GTR: new node("GTR", ["LS", "EC"], [844, 367]),
-    GBL: new node("GBL", ["ARS", "GBR"], [477, 470], [508.583]),
-    GBR: new node("GBR", ["GBL", "GTR"], [872, 563]),
+    AR_start: new node("ARS", ["GTL", "GBL", "ARE"], [503, 470],"Way Points"),
+    AR_End: new node("ARE", ["ARS", "SH", "CY"], [210, 466], "Way Points"),
+    MTL: new node("MTL", ["CO", "MTR", "BI"], [304, 78], "Way Points"),
+    MTR: new node("MTR", ["MTL", "MBR"], [403, 75], "Way Points"),
+    MBL: new node("MBL", ["BI", "CH", "MBR"], [293, 134], "Way Points"),
+    MBR: new node("MBR", ["CH", "MTR", "MBL", "MP"], [385, 192], "Way Points"),
+    MP: new node("MP", ['MBR', 'ME', "MAM"], [391, 232], "Way Points"),
+    MAM: new node("MAM", ["MP", "GTL", "OG"], [421, 275], "Way Points"),
+    MAG: new node("MAG", ["OG", "MU"], [256, 298], "Way Points"),
+    GTL: new node("GTL", ["UC", "ME", "MAM", "ARS"], [516, 307], "Way Points"),
+    GTR: new node("GTR", ["LS", "EC"], [844, 367], "Way Points"),
+    GBL: new node("GBL", ["ARS", "GBR"], [477, 470], [508.583], "Way Points"),
+    GBR: new node("GBR", ["GBL", "GTR"], [872, 563], "Way Points"),
     //////////////////////////////////////Locations//////////////////////////////////
     EC: new node("EC", ["GTR"], [815, 262]),
     LS: new node("LS", ["GTR", "UC"], [776, 335]),
@@ -276,13 +280,22 @@ function Node(input) {
         alert("Please select different Locations")
         window.close()
     } else {
-        console.log(Node(user.Start))
+        alert("Start: " + user.Start)
+        TestStartPointType(user.Start)
         Pathfind(Node(user.Start), Node(user.End))
         Canvas()
     }
 
 })()
-
+function TestStartPointType(node) {
+    alert(node)
+    if (Node(node).gettype() == true) {
+        alert("You can not start with a way point")
+        window.close()
+    } else {
+        console.log(Node.type)
+    }
+}
 function Canvas() {  // Cancas's Object
     img = new Image()
     img.onload = function () {

@@ -1,6 +1,6 @@
 ﻿body {
 	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
-	background-color: #4E5869;
+	background-color: #FFFFFF;
 	margin: 0;
 	padding: 0;
 	color: #000;
@@ -22,7 +22,8 @@ p{
 	text-align: center;
 }
 .container {
-	width: 80%;
+	width: 100%;
+    height: 20%;
 	max-width: 1260px;
 	min-width: 780px;
 	background-color: #FFF;
@@ -32,6 +33,8 @@ p{
 .content {
 	padding: 10px 0;
     position: center;
+    margin:auto
+    width:516px
 }
 
 #START{
@@ -56,4 +59,14 @@ p{
     display:block;
     text-align:center; 
     margin:auto;
+}
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: auto;
 }
