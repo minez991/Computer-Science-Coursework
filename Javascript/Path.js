@@ -26,7 +26,7 @@ var user ={
 }       //Class of user's selection
 var Database = {
     AR_start: new node("ARS", ["GTL", "GBL", "ARE"], [503, 470], "Way Points"),
-    AR_End: new node("ARE", ["ARS", "SH", "CY"], [210, 466], "Way Points"),
+    AR_End: new node("ARE", ["ARS", "SH", "CY","OG"], [210, 466], "Way Points"),
     MTL: new node("MTL", ["CO", "MTR", "BI"], [304, 78], "Way Points"),
     MTR: new node("MTR", ["MTL", "MBR"], [403, 75], "Way Points"),
     MBL: new node("MBL", ["BI", "CH", "MBR"], [293, 134], "Way Points"),
@@ -54,7 +54,7 @@ var Database = {
     PL: new node("PL", ["CY", "GE", "PLE"], [156, 578]), // need
     GE: new node("GE", ["PL"], [178, 702]),
     CY: new node("CY", ["ARE", "PL", "MU", "SH"], [157, 479]),
-    OG: new node("OG", ["MAM", "MAG"], [310, 323]),
+    OG: new node("OG", ["MAM", "MAG","ARE"], [310, 323]),
     PLE: new node("PLE", ["PL"], [88, 572])
 };  // Data Base of all the Nodes
 

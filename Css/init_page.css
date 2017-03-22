@@ -37,13 +37,11 @@ p{
     width:unset;
 }
 
-#START{
-        position:center;
-    }
 #START {
     display:block;
 	text-align:center;
     margin:auto;
+     position:center;
     }
 #Endlocation{
     display:block;
@@ -61,7 +59,7 @@ p{
     margin:auto;
 }
 .button {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50; 
     border: none;
     color: white;
     padding: 15px 32px;
@@ -84,7 +82,7 @@ label.custom-select {
     margin: 0;
     font: inherit;
     text-align:center;
-    outline:none; /* remove focus ring from Webkit */
+    outline:none;
     background: #4CAF50;
     color:white;
     border:0;
