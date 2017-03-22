@@ -2,16 +2,20 @@
 function init() {
     var Start = document.getElementById("Start").value
     End = document.getElementById("End").value,
-        Start = removenumber(Start),
-        End = removenumber(End);
-    if (DataBase[Start] != undefined && DataBase[End] != undefined) {
+    Pass = document.getElementById("Pass").value,
+    Start = removenumber(Start),
+    End = removenumber(End),
+    Pass = removenumber(Pass);
+    if (Start.value == End.value || Start.value == Pass.value || Pass.value == End.value) {
+        alert("You must have different values")
+    }else if (DataBase[Start] != undefined && DataBase[End] != undefined && DataBase[Pass] != undefined ) {
         sessionStorage.setItem("Start_Op", DataBase[Start])
         sessionStorage.setItem("End_Op", DataBase[End])
+        sessionStorage.setItem("Pass_Op", DataBase[Pass])
+        window.open("Map page.html", "__self");
     } else {
         alert("Oops, Something is not right.Check the classroom codes again (Mind Capital) =w=")
     }
-
-    window.open("Map page.html", "__self");
 }
 var DataBase = {
     PL: "PH",

@@ -33,15 +33,17 @@ p{
 .content {
 	padding: 10px 0;
     position: center;
-    margin:auto;
-    width:unset;
+    margin:auto
+    width:516px
 }
 
-#START {
+#START{
+        position:center;
+    }
+#startlocation {
     display:block;
 	text-align:center;
     margin:auto;
-     position:center;
     }
 #Endlocation{
     display:block;
@@ -59,31 +61,23 @@ p{
     margin:auto;
 }
 .button {
-    background-color: #4CAF50; 
+    background-color: #4CAF50;
     border: none;
     color: white;
     padding: 15px 32px;
     text-decoration: none;
-    display: block;
+    display: inline-block;
     font-size: 16px;
     margin: auto;
-
+    margin:auto
 }
-
-label.custom-select {
-    display: block;
+#MidPoint{
+    display:block;
+    text-align:center;
     margin:auto;
-    text-align:center;
-
 }
-
-.custom-select select {
-    padding: 4px 3px 3px 5px;
-    margin: 0;
-    font: inherit;
-    text-align:center;
-    outline:none;
-    background: #4CAF50;
-    color:white;
-    border:0;
+#ButtonConainter{
+     display:block;
+     width:10%;
+     margin:auto;
 }
