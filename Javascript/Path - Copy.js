@@ -26,19 +26,19 @@ var user ={
     End: sessionStorage.getItem("End_Op"),
 }       //Class of user's selection
 var Database = {
-    AR_start: new node("ARS", ["GTL", "GBL", "ARE"], [503, 470], "Way Points"),
-    AR_End: new node("ARE", ["OG","ARS", "SH", "CY"], [210, 466], "Way Points"),
-    MTL: new node("MTL", ["CO", "MTR", "BI"], [304, 78], "Way Points"),
-    MTR: new node("MTR", ["MTL", "MBR"], [403, 75], "Way Points"),
-    MBL: new node("MBL", ["BI", "CH", "MBR"], [293, 134], "Way Points"),
-    MBR: new node("MBR", ["CH", "MTR", "MBL", "MP"], [385, 192], "Way Points"),
-    MP: new node("MP", ['MBR', 'ME', "MAM"], [391, 232], "Way Points"),
-    MAM: new node("MAM", ["MP", "GTL", "OG"], [421, 275], "Way Points"),
-    MAG: new node("MAG", ["OG", "MU"], [256, 298], "Way Points"),
-    GTL: new node("GTL", ["UC", "ME", "MAM", "ARS"], [516, 307], "Way Points"),
-    GTR: new node("GTR", ["LS", "EC"], [844, 367], "Way Points"),
-    GBL: new node("GBL", ["ARS", "GBR"], [477, 470], [508.583], "Way Points"),
-    GBR: new node("GBR", ["GBL", "GTR"], [872, 563], "Way Points"),
+    AR_start: new node("ARS", ["GTL", "GBL", "ARE"], [503, 470]),
+    AR_End: new node("ARE", ["ARS", "SH", "CY"], [210, 466]),
+    MTL: new node("MTL", ["CO", "MTR", "BI"], [304, 78]),
+    MTR: new node("MTR", ["MTL", "MBR"], [403, 75]),
+    MBL: new node("MBL", ["BI", "CH", "MBR"], [293, 134]),
+    MBR: new node("MBR", ["CH", "MTR", "MBL", "MP"], [385, 192]),
+    MP: new node("MP", ['MBR', 'ME', "MAM"], [391, 232]),
+    MAM: new node("MAM", ["MP", "GTL", "OG"], [421, 275]),
+    MAG: new node("MAG", ["OG", "MU"], [256, 298]),
+    GTL: new node("GTL", ["UC", "ME", "MAM", "ARS"], [516, 307]),
+    GTR: new node("GTR", ["LS", "EC"], [844, 367]),
+    GBL: new node("GBL", ["ARS", "GBR"], [477, 470], [508.583]),
+    GBR: new node("GBR", ["GBL", "GTR"], [872, 563]),
     //////////////////////////////////////Locations//////////////////////////////////
     EC: new node("EC", ["GTR"], [815, 262]),
     LS: new node("LS", ["GTR", "UC"], [776, 335]),
@@ -50,12 +50,12 @@ var Database = {
     CO: new node("CO", ["MTL"], [284, 40]),
     CH: new node("CH", ["MBL", "MBR"], [320, 198]),
     PH: new node("PH", ["ME"], [519, 182]),
-    SH: new node("SH", ["ARE", "CY"], [210, 466]),
+    SH: new node("SH", ["ARE", "CY", "OG"], [210, 466]),
     MU: new node("MU", ["CY", "MAG"], [166, 361]),  //need ,
     PL: new node("PL", ["CY", "GE", "PLE"], [156, 578]), // need
     GE: new node("GE", ["PL"], [178, 702]),
     CY: new node("CY", ["ARE", "PL", "MU", "SH"], [157, 479]),
-    OG: new node("OG", ["MAM", "MAG","ARE"], [310, 323]),
+    OG: new node("OG", ["MAM", "MAG", "SH"], [310, 323]),
     PLE: new node("PLE", ["PL"], [88, 572])
 };  // Data Base of all the Nodes
 
@@ -204,9 +204,9 @@ function merge(left, right) {
 function retraceLastNode(node, Start) {
     console.log('Current Node:' + node.name)
     console.log('This is the ' + n + ' Recursion')
-    n = n +1
+    n = n + 1
     for (i = 0 ; i < node.connect.length; i++) {
-//        console.log(i)
+        //        console.log(i)
         var ConnectedNode = Node(node.connect[i])
         if (ConnectedNode.retracevisited == false) {
             console.log("d1")
@@ -216,13 +216,14 @@ function retraceLastNode(node, Start) {
                 ConnectedNode.retraceLastNode = true
                 if (ConnectedNode != Start) {
                     console.log("d3")
-                    retraceLastNode(ConnectedNode,Start) // recursive
+                    retraceLastNode(ConnectedNode, Start)
                 } else if (ConnectedNode == Start) {
-//                    console.log("d3 = ")
-//                    console.log(ConnectedNode)
+                    //                    console.log("d3 = ")
+                    //                    console.log(ConnectedNode)
                     break
                 }
-            break}
+                break
+            }
         }
     }
 }
@@ -240,49 +241,30 @@ function Pathfind(Start, End) {
     visited.push(Start)   // Push the current Node to the visited list, so that the algorithm will not visit it again
     console.log("---3 Creating Connection array---")
     PushConToTemp(Start)   //Reading the connection array and push it to a temperary node list, where in this list, every node is has an tempary value
-    console.log(TempNodes)
     console.log("---4 : Assign Temp value---")
     for (i = 0 ; i < TempNodes.length ; i++) {
         Assigntemp(Start, TempNodes[i])        // Assigning temperary value to all connected Node
     }
-    console.log(TempNodes)
     console.log("---5: Sorting TempNodes---")
-    bubbleSort(TempNodes)       //           // Find the node with smallest Node using bubble sort
-    console.log(mergesort(TempNodes))
-    //console.log(End)
+    TempNode = mergesort(TempNodes)       //           // Find the node with smallest Node using bubble sort
     while (End.ord == null) {                  // looping this algorithm until the Destination has an perment value
         console.log("---6: Current node -> smallest temp---")
-        console.log(Current)
         var Current = TempNodes.pop()         // Go to the next node
         visited.push(Current)                 // Push it to visited node
-        //console.log(TempNodes)
-        //console.log("Current Node:" + Current.name)
         console.log("---7: Assign Permentant value for the current node---")
-        console.log(Current)
         AssignPerm(Current)                  // Assigning permanent value to the node
-       // console.log("Next Order: " + Ord)
-      //  console.log("Current Order" + Current.ord)
         console.log("---8: Push the new connected to the Templist---")
-      //  console.log(Current)
         PushConToTemp(Current)                  
-      //  console.log(TempNodes)
         console.log("---9: Assign Temp Values to the new Node---")
         AssignConnectedtemp(Current)
         console.log("---10: Bubble Sort TempNodes---")
-//        if (TempNodes.length > 0) {
-//            console.log("---------Start Node-List--------")
-//            console.log(TempNodes)
-//            console.log("-------------TEmp NODE--------")
-        TempNodes = mergesort(TempNodes)
-//        }
+        TempNode = mergesort(TempNodes)
     }
-    //FUNCTION WORKED! RETRACT FROM HERE
     for (i = 0 ; i < visited.length ; i++) {
         vistited_string.push(visited[i].name);
     }
     console.log('visited node:')
     console.log(vistited_string)
-    //Debug Ends
     track.push(Current.name)
     retraceLastNode(Current, Start)
     console.log(track)
@@ -361,6 +343,7 @@ function Node(input) {
 	console.log(user.pass)
     PathCalc()
     Canvas()
+    console.log("Start: " + user.Start + "\nEnd: " +user.End + "\nPass: "+ user.Pass)
     }
 )()
 
@@ -380,7 +363,6 @@ function TestStartPointType(node) {
     }
 }
 function PathCalc(){
-	
     if (user.Pass == "Blank" || user.Pass == undefined) {
         alert("No Pass")
         PathFindWithoutPass()
@@ -391,22 +373,20 @@ function PathCalc(){
 
 function PathFindWithoutPass() {
     console.log(user.Start + "" + user.End)
-    Pathfind(Node(user.Start), Node(user.End))
-    PushListElement(track, FinalPath)
+    FinalPath.push(Pathfind(Node(user.Start), Node(user.End)))
+    //PushListElement(track, FinalPath)
 }
 function PathFindWithPass() {
-    Pathfind(Node(user.Start), Node(user.Pass))
-    PushListElement(track, FinalPath)
+    FinalPath.push(Pathfind(Node(user.Start), Node(user.Pass)))
     PathfindReset()
-    Pathfind(Node(user.Pass), Node(user.End))
+    FinalPath.push(Pathfind(Node(user.Pass), Node(user.End)))
 	console.log(track)
-    PushListElement(track, FinalPath)
 }
-function PushListElement(List1, List2) {
+/*function PushListElement(List1, List2) {
     for (i = 0; i < List1.length; i++) {
         List2.push(List1[i])
     }
-}
+}*/
 function PathfindReset() {
     Ord = 1
     Explored = []
@@ -426,25 +406,27 @@ function Canvas() {  // Cancas's Object
         imgIsloaded = true;
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.drawImage(img, 0, 0)
-        drawmap(FinalPath)
+        if (FinalPath[1] != undefined) {
+            drawDirect(FinalPath[1], '#FFFFFF')
+        }
+        drawDirect(FinalPath[0],'#66ccff')
+        DrawPoints(Node(user.Start),Node(user.End))
     }
     img.src = "Picture/map.png"
 };
     
 
 
-function drawmap(path) {
-    console.log("//////////////////////CALCULATING TRACK//////////////////////////")
-    console.log(path)
-    drawLocation(path)  //Draw out the path
-    DrawStartPoint(path) // Draw out the starting points
-    DrawEndPoint(path) // Draw out the ending points
-    DrawPassPoint() //Draw out the mid-points
+
+function DrawPoints(Start,End) {
+    DrawStartPoint(Start) // Draw out the starting points
+    DrawEndPoint(End) // Draw out the ending points
+    DrawPassPoint()
 }
-function drawLocation(path) {
+function drawDirect(path,Colour) {
     ctx.lineWidth = 5
     ctx.lineJoin = 'round' // Line Join Type
-    ctx.strokeStyle = '#66ccff' // Colour of line
+    ctx.strokeStyle = Colour // Colour of line
     ctx.beginPath();
     ctx.moveTo(Node(path[0]).p1[0], Node(path[0]).p1[1])
     for (i = 1; i < path.length ; i++) {
@@ -452,17 +434,15 @@ function drawLocation(path) {
     }
     ctx.stroke()
 }
-function DrawStartPoint(path) {
+
+function DrawStartPoint(Start) {
     ctx.fillStyle = '#00FF00' // Colour of Start Point
-    var X_Begin = Node(path[0]).p1[0]
-    var Y_Begin = Node(path[0]).p1[1]
     ctx.beginPath()
-    ctx.arc(X_Begin, Y_Begin, 5, 0, Math.PI * 2)
+    ctx.arc(Start.p1[0], Start.p1[1], 5, 0, Math.PI * 2)
     ctx.closePath()
     ctx.fill()
 }
-function DrawEndPoint(path) {
-    var End = Node(path[path.length - 1])
+function DrawEndPoint(End) {
     ctx.beginPath()
     ctx.fillStyle = "#FF0000"  // Colour for the End Point
     ctx.arc(End.p1[0], End.p1[1], 5, 0, Math.PI * 2)

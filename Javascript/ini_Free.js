@@ -1,4 +1,4 @@
-// JavaScript source code
+    // JavaScript source code
 function init() {
     var Start = document.getElementById("Start").value
     End = document.getElementById("End").value,
