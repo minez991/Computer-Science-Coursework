@@ -10,7 +10,8 @@ function node(name,connect,coordinate,type) {
     this.perm = null
     this.ord = null
     this.retracevisited = false
-    this.p1 = coordinate
+    this.x = coordinate[0]
+    this.y = coordinate[1]
     this.type = type
     this.gettype = function () {
         if (type == "Way Points") {
@@ -35,13 +36,13 @@ var Database = {
     MAM: new node("MAM", ["MP", "GTL", "OG"], [382, 285]),
     MAG: new node("MAG", ["OG", "MU"], [256, 298]),
     GTL: new node("GTL", ["ME", "MAM", "ARS", "OG", "UC"], [516, 307]),
-    GTR: new node("GTR", ["EC","GBR", "LS"], [844, 367]),
+    GTR: new node("GTR", ["EC", "GBR", "LS",'UC'], [844, 367]),
     GBL: new node("GBL", ["ARS", "GBR"], [511, 579]),
     GBR: new node("GBR", ["GBL", "GTR"], [872, 563]),
     //////////////////////////////////////Locations//////////////////////////////////
     EC: new node("EC", ["GTR"], [815, 262]),
     LS: new node("LS", ["GTR", "UC"], [776, 335]),
-    UC: new node("UC", ["F1","F2","LS", "GTL"], [690, 321]),
+    UC: new node("UC", ["F1", "F2", "LS", "GTL", "GTR"], [690, 321]),
     F1: new node("F1", ["UC"], [706, 273]),
     F2: new node("F2", ["UC"], [706, 273]),
     ME: new node("ME", ["PH", "GTL", "MP"], [482, 247]),
@@ -58,6 +59,7 @@ var Database = {
     PLE: new node("PLE", ["PL"], [88, 572])
 };  // Data Base of all the Nodes
 
+
 var ReplaceDatabase = {
     AR_start: new node("ARS", ["GBL", "SH", "GTL"], [503, 470]),
     MTL: new node("MTL", ["CO", "MTR", "BI", "MBL"], [304, 78]),
@@ -68,13 +70,13 @@ var ReplaceDatabase = {
     MAM: new node("MAM", ["MP", "GTL", "OG"], [382, 285]),
     MAG: new node("MAG", ["OG", "MU"], [256, 298]),
     GTL: new node("GTL", ["ME", "MAM", "ARS", "OG", "UC"], [516, 307]),
-    GTR: new node("GTR", ["LS", "EC", "GBR"], [844, 367]),
+    GTR: new node("GTR", ["EC", "GBR", "LS", 'UC'], [844, 367]),
     GBL: new node("GBL", ["ARS", "GBR"], [511, 579]),
     GBR: new node("GBR", ["GBL", "GTR"], [872, 563]),
     //////////////////////////////////////Locations//////////////////////////////////
     EC: new node("EC", ["GTR"], [815, 262]),
     LS: new node("LS", ["GTR", "UC"], [776, 335]),
-    UC: new node("UC", ["F1", "F2", "LS", "GTL"], [690, 321]),
+    UC: new node("UC", ["F1", "F2", "LS", "GTL", "GTR"], [690, 321]),
     F1: new node("F1", ["UC"], [706, 273]),
     F2: new node("F2", ["UC"], [706, 273]),
     ME: new node("ME", ["PH", "GTL", "MP"], [482, 247]),
@@ -88,7 +90,8 @@ var ReplaceDatabase = {
     GE: new node("GE", ["PL"], [178, 702]),
     CY: new node("CY", ["PL", "MU", "SH"], [157, 479]),
     OG: new node("OG", ["MAG", "SH", "GTL", "MAM"], [310, 323]),
-    PLE: new node("PLE", ["PL"], [88, 572])
+    PLE: new node("PLE", ["PL"], [88, 572]),
+
 };  // Data Base of all the Nodes
 
 ///////////////////////////////////////// Path Find Variable base
@@ -406,7 +409,7 @@ function Canvas() {  // Cancas's Object
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.drawImage(img, 0, 0)
         if (FinalPath[1] != undefined) {
-            drawDirect(FinalPath[1], '#FFFFFF')
+            drawDirect(FinalPath[1], '#66ccff')
         }
         drawDirect(FinalPath[0],'#66ccff')
         DrawPoints(Node(user.Start),Node(user.End))
@@ -414,9 +417,6 @@ function Canvas() {  // Cancas's Object
     img.src = "Picture/map.png"
 };
     
-
-
-
 function DrawPoints(Start,End) {
     DrawStartPoint(Start) // Draw out the starting points
     DrawEndPoint(End) // Draw out the ending points
@@ -427,64 +427,41 @@ function drawDirect(path,Colour) {
     ctx.lineJoin = 'round' // Line Join Type
     ctx.strokeStyle = Colour // Colour of line
     ctx.beginPath();
-    ctx.moveTo(Node(path[0]).p1[0], Node(path[0]).p1[1])
+    ctx.moveTo(Node(path[0]).x, Node(path[0]).y)
     for (i = 1; i < path.length ; i++) {
-        ctx.lineTo(Node(path[i]).p1[0], Node(path[i]).p1[1])
-        arrow(ctx, Node(path[i]), Node(path[i]))
+        canvas_arrow(ctx, Node(path[i - 1]).x, Node(path[i - 1]).y, Node(path[i]).x, Node(path[i]).y)
     }
     ctx.stroke()
 }
 
-
-function arrow(ctx, p1, p2, size) {
-    ctx.save();
- 
-    var points = edges(ctx, p1, p2);
-    if (points.length < 2) return
-    p1 = points[0], p2 = points[points.length - 1];
-
-    // Rotate the context to point along the path
-    var dx = p2.x - p1.x, dy = p2.y - p1.y, len = Math.sqrt(dx * dx + dy * dy);
-    ctx.translate(p2.x, p2.y);
-    ctx.rotate(Math.atan2(dy, dx));
-
-    // line
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(-len, 0);
-    ctx.closePath();
-    ctx.stroke();
-
-    // arrowhead
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(-size, -size);
-    ctx.lineTo(-size, size);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.restore();
+function canvas_arrow(context, fromx, fromy, tox, toy) {
+    var headlen = 20;   // length of head in pixels
+    var angle = Math.atan2(toy - fromy, tox - fromx);
+    context.moveTo(fromx, fromy);
+    context.lineTo(tox, toy);
+    context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+    context.moveTo(tox, toy);
+    context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
 }
 
 function DrawStartPoint(Start) {
     ctx.fillStyle = '#00FF00' // Colour of Start Point
     ctx.beginPath()
-    ctx.arc(Start.p1[0], Start.p1[1], 5, 0, Math.PI * 2)
+    ctx.arc(Start.x, Start.y, 5, 0, Math.PI * 2)
     ctx.closePath()
     ctx.fill()
 }
 function DrawEndPoint(End) {
     ctx.beginPath()
     ctx.fillStyle = "#FF0000"  // Colour for the End Point
-    ctx.arc(End.p1[0], End.p1[1], 5, 0, Math.PI * 2)
+    ctx.arc(End.x, End.y, 5, 0, Math.PI * 2)
     ctx.closePath()
     ctx.fill()
 }
 function DrawPassPoint() {
     ctx.fillStyle = '#f442ee' // Colour of mid-Point
     ctx.beginPath()
-    ctx.arc(Node(user.Pass).p1[0], Node(user.Pass).p1[1], 5, 0, Math.PI * 2)
+    ctx.arc(Node(user.Pass).x, Node(user.Pass).y, 5, 0, Math.PI * 2)
     ctx.closePath();
     ctx.fill()
 }
