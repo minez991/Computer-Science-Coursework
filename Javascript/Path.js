@@ -26,74 +26,41 @@ var user ={
     Pass: sessionStorage.getItem("Pass_Op"),
     End: sessionStorage.getItem("End_Op"),
 }       //Class of user's selection
-var Database = {
-    AR_start: new node("ARS", ["GBL", "SH", "GTL"], [503, 470]),
-    MTL: new node("MTL", ["CO", "MTR", "BI","MBL"], [304, 78]),
-    MTR: new node("MTR", ["MTL", "MBR"], [403, 75]),
-    MBL: new node("MBL", ["BI", "CH", "MBR", "MTL"], [302, 179]),
-    MBR: new node("MBR", ["CH", "MTR", "MBL", "MP"], [385, 192]),
-    MP: new node("MP", ['MBR', 'ME', "MAM"], [391, 232]),
-    MAM: new node("MAM", ["MP", "GTL", "OG"], [382, 285]),
-    MAG: new node("MAG", ["OG", "MU"], [256, 298]),
-    GTL: new node("GTL", ["ME", "MAM", "ARS", "OG", "UC"], [516, 307]),
-    GTR: new node("GTR", ["EC", "GBR", "LS",'UC'], [844, 367]),
-    GBL: new node("GBL", ["ARS", "GBR"], [511, 579]),
-    GBR: new node("GBR", ["GBL", "GTR"], [872, 563]),
+function NodeData() {
+    this.AR_start = new node("ARS", ["GBL", "SH", "GTL"], [503, 470]),
+    this.MTL = new node("MTL", ["CO", "MTR", "BI", "MBL"], [304, 78]),
+    this.MTR = new node("MTR", ["MTL", "MBR"], [403, 75]),
+    this.MBL = new node("MBL", ["BI", "CH", "MBR", "MTL"], [302, 179]),
+    this.MBR = new node("MBR", ["CH", "MTR", "MBL", "MP"], [385, 192]),
+    this.MP = new node("MP", ['MBR', 'ME', "MAM"], [391, 232]),
+    this.MAM = new node("MAM", ["MP", "GTL", "OG"], [382, 285]),
+    this.MAG = new node("MAG", ["OG", "MU"], [256, 298]),
+    this.GTL = new node("GTL", ["ME", "MAM", "ARS", "OG", "UC"], [516, 307]),
+    this.GTR = new node("GTR", ["EC", "GBR", "LS", 'UC'], [844, 367]),
+    this.GBL = new node("GBL", ["ARS", "GBR"], [511, 579]),
+    this.GBR = new node("GBR", ["GBL", "GTR"], [872, 563]),
     //////////////////////////////////////Locations//////////////////////////////////
-    EC: new node("EC", ["GTR"], [815, 262]),
-    LS: new node("LS", ["GTR", "UC"], [776, 335]),
-    UC: new node("UC", ["F1", "F2", "LS", "GTL", "GTR"], [690, 321]),
-    F1: new node("F1", ["UC"], [706, 273]),
-    F2: new node("F2", ["UC"], [706, 273]),
-    ME: new node("ME", ["PH", "GTL", "MP"], [482, 247]),
-    BI: new node("BI", ["MTL", "MBL"], [269, 143]),
-    CO: new node("CO", ["MTL"], [284, 40]),
-    CH: new node("CH", ["MBL", "MBR"], [320, 198]),
-    PH: new node("PH", ["ME"], [519, 182]),
-    SH: new node("SH", ["CY", "OG","ARS"], [210, 466]),
-    MU: new node("MU", ["CY", "MAG"], [166, 361]),  //need ,
-    PL: new node("PL", ["CY", "GE", "PLE"], [156, 578]), // need
-    GE: new node("GE", ["PL"], [178, 702]),
-    CY: new node("CY", ["PL", "MU", "SH"], [157, 479]),
-    OG: new node("OG", ["MAG", "SH", "GTL", "MAM"], [310, 323]),
-    PLE: new node("PLE", ["PL"], [88, 572])
+    this.EC = new node("EC", ["GTR"], [815, 262]),
+    this.LS = new node("LS", ["GTR", "UC"], [776, 335]),
+    this.UC = new node("UC", ["F1", "F2", "LS", "GTL", "GTR"], [690, 321]),
+    this.F1 = new node("F1", ["UC"], [706, 273]),
+    this.F2 = new node("F2", ["UC"], [706, 273]),
+    this.ME = new node("ME", ["PH", "GTL", "MP"], [482, 247]),
+    this.BI = new node("BI", ["MTL", "MBL"], [269, 143]),
+    this.CO = new node("CO", ["MTL"], [284, 40]),
+    this.CH = new node("CH", ["MBL", "MBR"], [320, 198]),
+    this.PH = new node("PH", ["ME"], [519, 182]),
+    this.SH = new node("SH", ["CY", "OG", "ARS"], [210, 466]),
+    this.MU = new node("MU", ["CY", "MAG"], [166, 361]),  //need ,
+    this.PL = new node("PL", ["CY", "GE", "PLE"], [156, 578]), // need
+    this.GE = new node("GE", ["PL"], [178, 702]),
+    this.CY = new node("CY", ["PL", "MU", "SH"], [157, 479]),
+    this.OG = new node("OG", ["MAG", "SH", "GTL", "MAM"], [310, 323]),
+    this.PLE = new node("PLE", ["PL"], [88, 572])
 };  // Data Base of all the Nodes
+function fetchData() {
 
-
-var ReplaceDatabase = {
-    AR_start: new node("ARS", ["GBL", "SH", "GTL"], [503, 470]),
-    MTL: new node("MTL", ["CO", "MTR", "BI", "MBL"], [304, 78]),
-    MTR: new node("MTR", ["MTL", "MBR"], [403, 75]),
-    MBL: new node("MBL", ["BI", "CH", "MBR", "MTL"], [302, 179]),
-    MBR: new node("MBR", ["CH", "MTR", "MBL", "MP"], [385, 192]),
-    MP: new node("MP", ['MBR', 'ME', "MAM"], [391, 232]),
-    MAM: new node("MAM", ["MP", "GTL", "OG"], [382, 285]),
-    MAG: new node("MAG", ["OG", "MU"], [256, 298]),
-    GTL: new node("GTL", ["ME", "MAM", "ARS", "OG", "UC"], [516, 307]),
-    GTR: new node("GTR", ["EC", "GBR", "LS", 'UC'], [844, 367]),
-    GBL: new node("GBL", ["ARS", "GBR"], [511, 579]),
-    GBR: new node("GBR", ["GBL", "GTR"], [872, 563]),
-    //////////////////////////////////////Locations//////////////////////////////////
-    EC: new node("EC", ["GTR"], [815, 262]),
-    LS: new node("LS", ["GTR", "UC"], [776, 335]),
-    UC: new node("UC", ["F1", "F2", "LS", "GTL", "GTR"], [690, 321]),
-    F1: new node("F1", ["UC"], [706, 273]),
-    F2: new node("F2", ["UC"], [706, 273]),
-    ME: new node("ME", ["PH", "GTL", "MP"], [482, 247]),
-    BI: new node("BI", ["MTL", "MBL"], [269, 143]),
-    CO: new node("CO", ["MTL"], [284, 40]),
-    CH: new node("CH", ["MBL", "MBR"], [320, 198]),
-    PH: new node("PH", ["ME"], [519, 182]),
-    SH: new node("SH", ["CY", "OG", "ARS"], [210, 466]),
-    MU: new node("MU", ["CY", "MAG"], [166, 361]),  //need ,
-    PL: new node("PL", ["CY", "GE", "PLE"], [156, 578]), // need
-    GE: new node("GE", ["PL"], [178, 702]),
-    CY: new node("CY", ["PL", "MU", "SH"], [157, 479]),
-    OG: new node("OG", ["MAG", "SH", "GTL", "MAM"], [310, 323]),
-    PLE: new node("PLE", ["PL"], [88, 572]),
-
-};  // Data Base of all the Nodes
-
+}
 ///////////////////////////////////////// Path Find Variable base
 var Ord = 1
 var Explored = []
@@ -107,12 +74,10 @@ var vistited_string = []
 var n = 1
 var FinalPath = []
 // Drawing variable
-var img,
-imgIsloaded,
-imgX = 0,
-imgY = 0,
-canvas = document.getElementById('canvas'),
-ctx = canvas.getContext('2d');
+/*
+var canvas = document.getElementById('canvas'),
+    ctx = canvas.getContext('2d');
+*/
 // PathFinding Algorithm
 
 function PushConToTemp(NodeName) {
@@ -142,7 +107,7 @@ function AssignPerm(Node) {
     Ord = Ord + 1
     Node.perm = Node.temp
 }
-function bubbleSort(NodeList) {
+/*function bubbleSort(NodeList) {
     for (i = 0 ; i < NodeList.length - 1 ; i++) {
         for (j = 0 ; j < NodeList.length -1 ; j++) {
             if (NodeList[j].temp <= NodeList[j+1].temp) {
@@ -152,13 +117,8 @@ function bubbleSort(NodeList) {
 }
 }
 }
-}
-// I could convert this to a merge sort
-
+}*/
 function mergesort(m) {
-    console.log("LIST CONFIG")
-    console.log(m)
-    console.log(m.length)
     if (m.length < 2)
         return m;
 
@@ -176,7 +136,6 @@ function mergesort(m) {
 
 function merge(left, right) {
     var result = [];
-
     while (left.length && right.length) {
         if (left[0].temp >= right[0].temp) {
             result.push(left.shift());
@@ -241,11 +200,7 @@ function Pathfind(Start, End) {
         Assigntemp(Start, TempNodes[i])        // Assigning temperary value to all connected Node
     }
     console.log("---5: Sorting TempNodes---")
-
-    //bubbleSort(TempNodes)
     TempNodes = mergesort(TempNodes)       //           // Find the node with smallest Node using bubble sort
-    //TempNodes = quickSort(TempNodes)
-
     while (End.ord == null) {                  // looping this algorithm until the Destination has an perment value
         console.log("---6: Current node -> smallest temp---")
         var Current = TempNodes.pop()         // Go to the next node
@@ -258,10 +213,7 @@ function Pathfind(Start, End) {
         AssignConnectedtemp(Current)
 
         console.log("---10: Sort TempNodes---")
-        //bubbleSort(TempNodes)
         TempNodes = mergesort(TempNodes)
-        //TempNodes = quickSort(TempNodes)
-
     }
     for (i = 0 ; i < visited.length ; i++) {
         vistited_string.push(visited[i].name);
@@ -342,11 +294,10 @@ function Node(input) {
 
 //__INIT__
 (function int() {
+    window.Database = new NodeData()
     Validation()
-	console.log(user.pass)
     PathCalc()
     Canvas()
-    console.log("Start: " + user.Start + "\nEnd: " +user.End + "\nPass: "+ user.Pass)
     }
 )()
 
@@ -376,7 +327,6 @@ function PathCalc(){
 function PathFindWithoutPass() {
     console.log(user.Start + "" + user.End)
     FinalPath.push(Pathfind(Node(user.Start), Node(user.End)))
-    //PushListElement(track, FinalPath)
 }
 function PathFindWithPass() {
     FinalPath.push(Pathfind(Node(user.Start), Node(user.Pass)))
@@ -384,11 +334,7 @@ function PathFindWithPass() {
     FinalPath.push(Pathfind(Node(user.Pass), Node(user.End)))
 	console.log(track)
 }
-/*function PushListElement(List1, List2) {
-    for (i = 0; i < List1.length; i++) {
-        List2.push(List1[i])
-    }
-}*/
+
 function PathfindReset() {
     Ord = 1
     Explored = []
@@ -400,29 +346,30 @@ function PathfindReset() {
     track_Node = [];
     vistited_string = []
     n = 1
-    Database = ReplaceDatabase
+    Database = new NodeData()
 }
 function Canvas() {  // Cancas's Object
     img = new Image()
+    var canvas = document.getElementById('canvas'), //Canvas Declaration
+    ctx = canvas.getContext('2d');
     img.onload = function () {
-        imgIsloaded = true;
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.drawImage(img, 0, 0)
         if (FinalPath[1] != undefined) {
-            drawDirect(FinalPath[1], '#66ccff')
+            drawDirect(FinalPath[1], '#66ccff',ctx)
         }
-        drawDirect(FinalPath[0],'#66ccff')
-        DrawPoints(Node(user.Start),Node(user.End))
+        drawDirect(FinalPath[0], '#66ccff', ctx)
+        DrawPoints(Node(user.Start), Node(user.End), ctx)
     }
     img.src = "Picture/map.png"
 };
     
-function DrawPoints(Start,End) {
-    DrawStartPoint(Start) // Draw out the starting points
-    DrawEndPoint(End) // Draw out the ending points
+function DrawPoints(Start,End,ctx) {
+    DrawStartPoint(Start, ctx) // Draw out the starting points
+    DrawEndPoint(End, ctx) // Draw out the ending points
     DrawPassPoint()
 }
-function drawDirect(path,Colour) {
+function drawDirect(path, Colour, ctx) {    
     ctx.lineWidth = 5
     ctx.lineJoin = 'round' // Line Join Type
     ctx.strokeStyle = Colour // Colour of line
@@ -434,7 +381,7 @@ function drawDirect(path,Colour) {
     ctx.stroke()
 }
 
-function canvas_arrow(context, fromx, fromy, tox, toy) {
+function canvas_arrow(context, fromx, fromy, tox, toy) {    //Line drawing function
     var headlen = 20;   // length of head in pixels
     var angle = Math.atan2(toy - fromy, tox - fromx);
     context.moveTo(fromx, fromy);
@@ -444,14 +391,14 @@ function canvas_arrow(context, fromx, fromy, tox, toy) {
     context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
 }
 
-function DrawStartPoint(Start) {
+function DrawStartPoint(Start, ctx) {
     ctx.fillStyle = '#00FF00' // Colour of Start Point
     ctx.beginPath()
     ctx.arc(Start.x, Start.y, 5, 0, Math.PI * 2)
     ctx.closePath()
     ctx.fill()
 }
-function DrawEndPoint(End) {
+function DrawEndPoint(End, ctx) {
     ctx.beginPath()
     ctx.fillStyle = "#FF0000"  // Colour for the End Point
     ctx.arc(End.x, End.y, 5, 0, Math.PI * 2)
