@@ -35,13 +35,13 @@ function NodeData() {
     this.MP = new node("MP", ['MBR', 'ME', "MAM"], [391, 232]),
     this.MAM = new node("MAM", ["MP", "GTL", "OG"], [382, 285]),
     this.MAG = new node("MAG", ["OG", "MU"], [256, 298]),
-    this.GTL = new node("GTL", ["ME", "MAM", "ARS", "OG", "UC"], [516, 307]),
-    this.GTR = new node("GTR", ["EC", "GBR", "LS", 'UC'], [844, 367]),
+    this.GTL = new node("GTL", ["ME", "MAM", "ARS", "OG", "UC", "GTR","LS"], [516, 307]),
+    this.GTR = new node("GTR", ["EC", "GBR", "LS", 'UC',"GTL"], [844, 367]),
     this.GBL = new node("GBL", ["ARS", "GBR"], [511, 579]),
     this.GBR = new node("GBR", ["GBL", "GTR"], [872, 563]),
     //////////////////////////////////////Locations//////////////////////////////////
     this.EC = new node("EC", ["GTR"], [815, 262]),
-    this.LS = new node("LS", ["GTR", "UC"], [776, 335]),
+    this.LS = new node("LS", ["GTR", "UC","GTL"], [776, 335]),
     this.UC = new node("UC", ["F1", "F2", "LS", "GTL", "GTR"], [690, 321]),
     this.F1 = new node("F1", ["UC"], [706, 273]),
     this.F2 = new node("F2", ["UC"], [706, 273]),
@@ -356,10 +356,14 @@ function Canvas() {  // Cancas's Object
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.drawImage(img, 0, 0)
         if (FinalPath[1] != undefined) {
-            drawDirect(FinalPath[1], '#66ccff',ctx)
+            drawDirect(FinalPath[1], '#FF0000',3, ctx)
+            drawDirect(FinalPath[0], '#66ccff', 3, ctx)
+            DrawPassPoint(ctx)
+            DrawPoints(Node(user.Start), Node(user.End),ctx)
+        } else {
+            drawDirect(FinalPath[0], '#66ccff',5, ctx)
+            DrawPoints(Node(user.Start), Node(user.End), ctx)
         }
-        drawDirect(FinalPath[0], '#66ccff', ctx)
-        DrawPoints(Node(user.Start), Node(user.End), ctx)
     }
     img.src = "Picture/map.png"
 };
@@ -367,10 +371,9 @@ function Canvas() {  // Cancas's Object
 function DrawPoints(Start,End,ctx) {
     DrawStartPoint(Start, ctx) // Draw out the starting points
     DrawEndPoint(End, ctx) // Draw out the ending points
-    DrawPassPoint()
 }
-function drawDirect(path, Colour, ctx) {    
-    ctx.lineWidth = 5
+function drawDirect(path, Colour,headsize, ctx) {    
+    ctx.lineWidth = headsize
     ctx.lineJoin = 'round' // Line Join Type
     ctx.strokeStyle = Colour // Colour of line
     ctx.beginPath();
@@ -386,9 +389,9 @@ function canvas_arrow(context, fromx, fromy, tox, toy) {    //Line drawing funct
     var angle = Math.atan2(toy - fromy, tox - fromx);
     context.moveTo(fromx, fromy);
     context.lineTo(tox, toy);
-    context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+    context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 8), toy - headlen * Math.sin(angle - Math.PI / 8));
     context.moveTo(tox, toy);
-    context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+    context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 8), toy - headlen * Math.sin(angle + Math.PI / 8));
 }
 
 function DrawStartPoint(Start, ctx) {
@@ -405,7 +408,7 @@ function DrawEndPoint(End, ctx) {
     ctx.closePath()
     ctx.fill()
 }
-function DrawPassPoint() {
+function DrawPassPoint(ctx) {
     ctx.fillStyle = '#f442ee' // Colour of mid-Point
     ctx.beginPath()
     ctx.arc(Node(user.Pass).x, Node(user.Pass).y, 5, 0, Math.PI * 2)

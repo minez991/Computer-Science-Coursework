@@ -41,7 +41,7 @@ p{
     display:block;
 	text-align:center;
     margin:auto;
-     position:center;
+    position:center;
     }
 #Endlocation{
     display:block;
@@ -52,6 +52,8 @@ p{
     display:block;
     width:10%;
     margin:auto;
+    min-width:285px;
+    min-height:30px;
 }
 #KingPhoto{
     display:block;
